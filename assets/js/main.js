@@ -1,11 +1,3 @@
-/**
-* Template Name: Nexa
-* Template URL: https://bootstrapmade.com/nexa-bootstrap-agency-template/
-* Updated: Aug 19 2025 with Bootstrap v5.3.7
-* Author: BootstrapMade.com
-* License: https://bootstrapmade.com/license/
-*/
-
 (function() {
   "use strict";
 
@@ -15,7 +7,7 @@
   function toggleScrolled() {
     const selectBody = document.querySelector('body');
     const selectHeader = document.querySelector('#header');
-    if (!selectHeader.classList.contains('scroll-up-sticky') && !selectHeader.classList.contains('sticky-top') && !selectHeader.classList.contains('fixed-top')) return;
+    if (!selectHeader || (!selectHeader.classList.contains('scroll-up-sticky') && !selectHeader.classList.contains('sticky-top') && !selectHeader.classList.contains('fixed-top'))) return;
     window.scrollY > 100 ? selectBody.classList.add('scrolled') : selectBody.classList.remove('scrolled');
   }
 
@@ -45,7 +37,6 @@
         mobileNavToogle();
       }
     });
-
   });
 
   /**
@@ -80,13 +71,15 @@
       window.scrollY > 100 ? scrollTop.classList.add('active') : scrollTop.classList.remove('active');
     }
   }
-  scrollTop.addEventListener('click', (e) => {
-    e.preventDefault();
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
+  if (scrollTop) {
+    scrollTop.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
     });
-  });
+  }
 
   window.addEventListener('load', toggleScrollTop);
   document.addEventListener('scroll', toggleScrollTop);
@@ -95,26 +88,28 @@
    * Animation on scroll function and init
    */
   function aosInit() {
-    AOS.init({
-      duration: 600,
-      easing: 'ease-in-out',
-      once: true,
-      mirror: false
-    });
+    if (window.AOS && typeof AOS.init === 'function') {
+      AOS.init({
+        duration: 600,
+        easing: 'ease-in-out',
+        once: true,
+        mirror: false
+      });
+    }
   }
   window.addEventListener('load', aosInit);
 
   /**
    * Initiate glightbox
    */
-  const glightbox = GLightbox({
-    selector: '.glightbox'
-  });
+  if (window.GLightbox) {
+    GLightbox({ selector: '.glightbox' });
+  }
 
   /**
    * Initiate Pure Counter
    */
-  new PureCounter();
+  if (window.PureCounter) new PureCounter();
 
   /**
    * Init swiper sliders
@@ -126,13 +121,14 @@
       );
 
       if (swiperElement.classList.contains("swiper-tab")) {
-        initSwiperWithCustomPagination(swiperElement, config);
+        if (typeof initSwiperWithCustomPagination === 'function') {
+          initSwiperWithCustomPagination(swiperElement, config);
+        }
       } else {
-        new Swiper(swiperElement, config);
+        if (window.Swiper) new Swiper(swiperElement, config);
       }
     });
   }
-
   window.addEventListener("load", initSwiper);
 
   /**
@@ -144,28 +140,30 @@
     let sort = isotopeItem.getAttribute('data-sort') ?? 'original-order';
 
     let initIsotope;
-    imagesLoaded(isotopeItem.querySelector('.isotope-container'), function() {
-      initIsotope = new Isotope(isotopeItem.querySelector('.isotope-container'), {
-        itemSelector: '.isotope-item',
-        layoutMode: layout,
-        filter: filter,
-        sortBy: sort
+    if (window.imagesLoaded && window.Isotope) {
+      imagesLoaded(isotopeItem.querySelector('.isotope-container'), function() {
+        initIsotope = new Isotope(isotopeItem.querySelector('.isotope-container'), {
+          itemSelector: '.isotope-item',
+          layoutMode: layout,
+          filter: filter,
+          sortBy: sort
+        });
       });
-    });
+    }
 
     isotopeItem.querySelectorAll('.isotope-filters li').forEach(function(filters) {
       filters.addEventListener('click', function() {
-        isotopeItem.querySelector('.isotope-filters .filter-active').classList.remove('filter-active');
+        let active = isotopeItem.querySelector('.isotope-filters .filter-active');
+        if (active) active.classList.remove('filter-active');
         this.classList.add('filter-active');
-        initIsotope.arrange({
-          filter: this.getAttribute('data-filter')
-        });
+        if (initIsotope) {
+          initIsotope.arrange({ filter: this.getAttribute('data-filter') });
+        }
         if (typeof aosInit === 'function') {
           aosInit();
         }
       }, false);
     });
-
   });
 
   /**
@@ -178,22 +176,73 @@
   });
 
   /**
-   * Correct scrolling position upon page load for URLs containing hash links.
+   * ----- Consistent anchor scrolling (clicks + refresh with hash) -----
    */
-  window.addEventListener('load', function(e) {
+
+  // 1) Ensure the browser doesn't auto-scroll on load/restore
+  if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+  }
+
+  // 2) Helper: get scroll-margin-top from the target (lets CSS control the offset)
+  function getScrollMarginTop(el) {
+    return parseInt(getComputedStyle(el).scrollMarginTop) || 0;
+  }
+
+  // 3) Helper: unified scroll with offset
+  function scrollToWithOffset(el, behavior) {
+    const y = window.scrollY + el.getBoundingClientRect().top - getScrollMarginTop(el);
+    window.scrollTo({ top: y, behavior });
+  }
+
+  // 4) Disable smooth just for the initial hash jump (avoids fighting AOS)
+  const styleTag = document.createElement('style');
+  styleTag.textContent = 'html.no-smooth { scroll-behavior: auto !important; }';
+  document.head.appendChild(styleTag);
+
+  // 5) On load with hash: jump instantly to final position (no animation), luego ya queda todo suave
+  window.addEventListener('load', function() {
     if (window.location.hash) {
-      if (document.querySelector(window.location.hash)) {
-        setTimeout(() => {
-          let section = document.querySelector(window.location.hash);
-          let scrollMarginTop = getComputedStyle(section).scrollMarginTop;
-          window.scrollTo({
-            top: section.offsetTop - parseInt(scrollMarginTop),
-            behavior: 'smooth'
+      const section = document.querySelector(window.location.hash);
+      if (section) {
+        document.documentElement.classList.add('no-smooth');
+        // dos frames para asegurar layout tras fonts/images/AOS setup
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            scrollToWithOffset(section, 'auto'); // sin animación al cargar
+            setTimeout(() => {
+              document.documentElement.classList.remove('no-smooth');
+            }, 100);
           });
-        }, 100);
+        });
       }
     }
   });
+
+  // 6) Interceptar clics en enlaces internos para un scroll suave y consistente
+  document.addEventListener('click', function(e) {
+    const link = e.target.closest('a[href^="#"]');
+    if (!link) return;
+
+    const href = link.getAttribute('href');
+    if (!href || href === '#') return;
+
+    const target = document.querySelector(href);
+    if (!target) return;
+
+    // Evitar que el navegador haga su propio salto
+    e.preventDefault();
+
+    // Actualizar la URL (opcional, mantiene el hash)
+    if (history.pushState) {
+      history.pushState(null, '', href);
+    } else {
+      window.location.hash = href;
+    }
+
+    // Scroll suave y con offset
+    scrollToWithOffset(target, 'smooth');
+  }, false);
 
   /**
    * Navmenu Scrollspy
