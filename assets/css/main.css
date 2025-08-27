@@ -1,15 +1,4 @@
-/**
-* Template Name: Nexa
-* Template URL: https://bootstrapmade.com/nexa-bootstrap-agency-template/
-* Updated: Aug 19 2025 with Bootstrap v5.3.7
-* Author: BootstrapMade.com
-* License: https://bootstrapmade.com/license/
-*/
 
-/*--------------------------------------------------------------
-# Font & Color Variables
-# Help: https://bootstrapmade.com/color-system/
---------------------------------------------------------------*/
 /* Fonts */
 :root {
   --default-font: "Roboto",  system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
@@ -22,7 +11,7 @@
   --background-color: #070708; /* Background color for the entire website, including individual sections */
   --default-color: rgba(255, 255, 255, 0.8); /* Default color used for the majority of the text content across the entire website */
   --heading-color: #ffffff; /* Color for headings, subheadings and title throughout the website */
-  --accent-color: #008870; /* Accent color that represents your brand on the website. It's used for buttons, links, and other elements that need to stand out */
+  --accent-color: #575AFF; /* Accent color that represents your brand on the website. It's used for buttons, links, and other elements that need to stand out */
   --surface-color: #1f1f23; /* The surface color is used as a background of boxed elements within sections, such as cards, icon boxes, or other elements that require a visual separation from the global background. */
   --contrast-color: #ffffff; /* Contrast color for text, ensuring readability against backgrounds of accent, heading, or default colors. */
 }
@@ -30,7 +19,7 @@
 /* Nav Menu Colors - The following color variables are used specifically for the navigation menu. They are separate from the global colors to allow for more customization options */
 :root {
   --nav-color: rgba(255, 255, 255, 0.8);  /* The default color of the main navmenu links */
-  --nav-hover-color: #008870; /* Applied to main navmenu links when they are hovered over or active */
+  --nav-hover-color: #575AFF; /* Applied to main navmenu links when they are hovered over or active */
   --nav-mobile-background-color: #1f1f23; /* Used as the background color for mobile navigation menu */
   --nav-dropdown-background-color: #1f1f23; /* Used as the background color for dropdown items that appear when hovering over primary navigation items */
   --nav-dropdown-color: rgba(255, 255, 255, 0.8); /* Used for navigation links of the dropdown items in the navigation menu. */
@@ -1379,6 +1368,59 @@ section,
   }
 }
 
+/* Contenedor general */
+.services-typed {
+  text-align: center;
+  display: flex;
+  justify-content: center; /* Centra el texto horizontalmente */
+  align-items: center;     /* Centra el texto verticalmente */
+  margin: 2rem auto;
+}
+
+.services-typed p {
+  font-size: 1.4rem;
+  font-family: var(--heading-font);
+  color: var(--heading-color);
+  font-weight: 500;
+  display: flex;           /* Asegura que el texto fijo y animado estén alineados */
+  align-items: center;     /* Centra verticalmente el texto */
+  gap: 8px;                /* Espaciado entre "Creamos" y el texto generado */
+}
+
+/* Estilo del texto fijo */
+.services-typed .fixed-text {
+  color: var(--accent-color);
+  font-weight: 600;
+  display: inline-block;
+}
+
+/* Estilo del texto generado */
+.services-typed .typed {
+  display: inline-block;    /* Mantén el texto animado en línea */
+  white-space: nowrap;      /* Evita que el texto se rompa en varias líneas */
+  color: var(--default-color);
+  font-weight: 500;
+  text-align: left;
+}
+
+/* Cursor animado */
+.typed-cursor {
+  display: inline;          /* Asegura que el cursor esté en línea con el texto */
+  font-size: 1.4rem;
+  color: var(--accent-color);
+  margin-left: 0px;         /* Asegúrate de que el cursor esté pegado al texto */
+  animation: blink 0.7s infinite; /* Efecto de parpadeo */
+}
+
+/* Animación de parpadeo */
+@keyframes blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
 /*--------------------------------------------------------------
 # Steps Section
 --------------------------------------------------------------*/

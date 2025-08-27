@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Index - Nexa Bootstrap Template</title>
+  <title>DAIA soluciones AI</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
 
@@ -30,14 +30,41 @@
 </head>
 
 <body class="index-page">
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Initialize AOS
+      AOS.init({ duration: 600, easing: 'ease-in-out', once: true, mirror: false });
+
+      // Initialize Typed.js
+      const typedElement = document.querySelector('.services-typed .typed');
+      if (typedElement) {
+        const typedStrings = typedElement.getAttribute('data-typed-items')
+          .split(',')
+          .map(s => s.trim())
+          .filter(Boolean);
+
+        if (typedStrings.length > 0) {
+          new Typed('.services-typed .typed', {
+            strings: typedStrings,
+            typeSpeed: 70,
+            backSpeed: 50,
+            backDelay: 2000,
+            loop: true,
+            showCursor: true,
+            cursorChar: '|'
+          });
+        }
+      }
+    });
+  </script>
 
   <header id="header" class="header d-flex align-items-center sticky-top">
     <div class="container position-relative d-flex align-items-center justify-content-between">
 
       <a href="index.html" class="logo d-flex align-items-center me-auto me-xl-0">
         <!-- Uncomment the line below if you also wish to use an image logo -->
-        <!-- <img src="assets/img/logo.webp" alt=""> -->
-        <h1 class="sitename">Nexa</h1>
+        <img src="assets/img/logo.webp" alt="">
+        <h1 class="sitename">DAIA</h1>
       </a>
 
       <nav id="navmenu" class="navmenu">
@@ -80,10 +107,10 @@
 
               <div class="hero-btns" data-aos="fade-up" data-aos-delay="300">
                 <a href="#about" class="btn btn-primary">Start Your Journey</a>
-                <a href="https://www.youtube.com/watch?v=Y7f98aduVJ8" class="btn btn-outline glightbox">
+                <!--<a href="https://www.youtube.com/watch?v=Y7f98aduVJ8" class="btn btn-outline glightbox">
                   <i class="bi bi-play-circle"></i>
                   Watch Demo
-                </a>
+                </a>-->
               </div>
             </div>
           </div>
@@ -223,7 +250,15 @@
         <h2>Services</h2>
         <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
       </div><!-- End Section Title -->
-
+        <!-- Texto con efecto Typed -->
+          <div class="container services-typed" data-aos="fade-up" data-aos-delay="100">
+          <p>
+            <span class="fixed-text">Creamos</span>
+            <span class="typed" data-typed-items="Estrategias de marketing,Embudos de venta,Bots personalizados"></span>
+          </p>
+        </div>
+     <!-- Servicios / grid -->
+   
       <div class="container" data-aos="fade-up" data-aos-delay="100">
 
         <div class="services-container">
@@ -1188,6 +1223,8 @@
   <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
 
   <!-- Main JS File -->
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
   <script src="assets/js/main.js"></script>
 
 </body>
