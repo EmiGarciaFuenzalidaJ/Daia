@@ -1,39 +1,47 @@
-(function() {
+(function () {
   "use strict";
 
   /**
    * Apply .scrolled class to the body as the page is scrolled down
    */
   function toggleScrolled() {
-    const selectBody = document.querySelector('body');
-    const selectHeader = document.querySelector('#header');
-    if (!selectHeader || (!selectHeader.classList.contains('scroll-up-sticky') && !selectHeader.classList.contains('sticky-top') && !selectHeader.classList.contains('fixed-top'))) return;
-    window.scrollY > 100 ? selectBody.classList.add('scrolled') : selectBody.classList.remove('scrolled');
+    const selectBody = document.querySelector("body");
+    const selectHeader = document.querySelector("#header");
+    if (
+      !selectHeader ||
+      (!selectHeader.classList.contains("scroll-up-sticky") &&
+        !selectHeader.classList.contains("sticky-top") &&
+        !selectHeader.classList.contains("fixed-top"))
+    )
+      return;
+    window.scrollY > 100
+      ? selectBody.classList.add("scrolled")
+      : selectBody.classList.remove("scrolled");
   }
 
-  document.addEventListener('scroll', toggleScrolled);
-  window.addEventListener('load', toggleScrolled);
+  document.addEventListener("scroll", toggleScrolled);
+  window.addEventListener("load", toggleScrolled);
 
   /**
    * Mobile nav toggle
    */
-  const mobileNavToggleBtn = document.querySelector('.mobile-nav-toggle');
+  const mobileNavToggleBtn = document.querySelector(".mobile-nav-toggle");
 
   function mobileNavToogle() {
-    document.querySelector('body').classList.toggle('mobile-nav-active');
-    mobileNavToggleBtn.classList.toggle('bi-list');
-    mobileNavToggleBtn.classList.toggle('bi-x');
+    document.querySelector("body").classList.toggle("mobile-nav-active");
+    mobileNavToggleBtn.classList.toggle("bi-list");
+    mobileNavToggleBtn.classList.toggle("bi-x");
   }
   if (mobileNavToggleBtn) {
-    mobileNavToggleBtn.addEventListener('click', mobileNavToogle);
+    mobileNavToggleBtn.addEventListener("click", mobileNavToogle);
   }
 
   /**
    * Hide mobile nav on same-page/hash links
    */
-  document.querySelectorAll('#navmenu a').forEach(navmenu => {
-    navmenu.addEventListener('click', () => {
-      if (document.querySelector('.mobile-nav-active')) {
+  document.querySelectorAll("#navmenu a").forEach((navmenu) => {
+    navmenu.addEventListener("click", () => {
+      if (document.querySelector(".mobile-nav-active")) {
         mobileNavToogle();
       }
     });
@@ -42,11 +50,11 @@
   /**
    * Toggle mobile nav dropdowns
    */
-  document.querySelectorAll('.navmenu .toggle-dropdown').forEach(navmenu => {
-    navmenu.addEventListener('click', function(e) {
+  document.querySelectorAll(".navmenu .toggle-dropdown").forEach((navmenu) => {
+    navmenu.addEventListener("click", function (e) {
       e.preventDefault();
-      this.parentNode.classList.toggle('active');
-      this.parentNode.nextElementSibling.classList.toggle('dropdown-active');
+      this.parentNode.classList.toggle("active");
+      this.parentNode.nextElementSibling.classList.toggle("dropdown-active");
       e.stopImmediatePropagation();
     });
   });
@@ -54,9 +62,9 @@
   /**
    * Preloader
    */
-  const preloader = document.querySelector('#preloader');
+  const preloader = document.querySelector("#preloader");
   if (preloader) {
-    window.addEventListener('load', () => {
+    window.addEventListener("load", () => {
       preloader.remove();
     });
   }
@@ -64,46 +72,48 @@
   /**
    * Scroll top button
    */
-  let scrollTop = document.querySelector('.scroll-top');
+  let scrollTop = document.querySelector(".scroll-top");
 
   function toggleScrollTop() {
     if (scrollTop) {
-      window.scrollY > 100 ? scrollTop.classList.add('active') : scrollTop.classList.remove('active');
+      window.scrollY > 100
+        ? scrollTop.classList.add("active")
+        : scrollTop.classList.remove("active");
     }
   }
   if (scrollTop) {
-    scrollTop.addEventListener('click', (e) => {
+    scrollTop.addEventListener("click", (e) => {
       e.preventDefault();
       window.scrollTo({
         top: 0,
-        behavior: 'smooth'
+        behavior: "smooth",
       });
     });
   }
 
-  window.addEventListener('load', toggleScrollTop);
-  document.addEventListener('scroll', toggleScrollTop);
+  window.addEventListener("load", toggleScrollTop);
+  document.addEventListener("scroll", toggleScrollTop);
 
   /**
    * Animation on scroll function and init
    */
   function aosInit() {
-    if (window.AOS && typeof AOS.init === 'function') {
+    if (window.AOS && typeof AOS.init === "function") {
       AOS.init({
         duration: 600,
-        easing: 'ease-in-out',
+        easing: "ease-in-out",
         once: true,
-        mirror: false
+        mirror: false,
       });
     }
   }
-  window.addEventListener('load', aosInit);
+  window.addEventListener("load", aosInit);
 
   /**
    * Initiate glightbox
    */
   if (window.GLightbox) {
-    GLightbox({ selector: '.glightbox' });
+    GLightbox({ selector: ".glightbox" });
   }
 
   /**
@@ -115,13 +125,13 @@
    * Init swiper sliders
    */
   function initSwiper() {
-    document.querySelectorAll(".init-swiper").forEach(function(swiperElement) {
+    document.querySelectorAll(".init-swiper").forEach(function (swiperElement) {
       let config = JSON.parse(
         swiperElement.querySelector(".swiper-config").innerHTML.trim()
       );
 
       if (swiperElement.classList.contains("swiper-tab")) {
-        if (typeof initSwiperWithCustomPagination === 'function') {
+        if (typeof initSwiperWithCustomPagination === "function") {
           initSwiperWithCustomPagination(swiperElement, config);
         }
       } else {
@@ -134,136 +144,171 @@
   /**
    * Init isotope layout and filters
    */
-  document.querySelectorAll('.isotope-layout').forEach(function(isotopeItem) {
-    let layout = isotopeItem.getAttribute('data-layout') ?? 'masonry';
-    let filter = isotopeItem.getAttribute('data-default-filter') ?? '*';
-    let sort = isotopeItem.getAttribute('data-sort') ?? 'original-order';
+  document.querySelectorAll(".isotope-layout").forEach(function (isotopeItem) {
+    let layout = isotopeItem.getAttribute("data-layout") ?? "masonry";
+    let filter = isotopeItem.getAttribute("data-default-filter") ?? "*";
+    let sort = isotopeItem.getAttribute("data-sort") ?? "original-order";
 
     let initIsotope;
     if (window.imagesLoaded && window.Isotope) {
-      imagesLoaded(isotopeItem.querySelector('.isotope-container'), function() {
-        initIsotope = new Isotope(isotopeItem.querySelector('.isotope-container'), {
-          itemSelector: '.isotope-item',
-          layoutMode: layout,
-          filter: filter,
-          sortBy: sort
-        });
+      imagesLoaded(isotopeItem.querySelector(".isotope-container"), function () {
+        initIsotope = new Isotope(
+          isotopeItem.querySelector(".isotope-container"),
+          {
+            itemSelector: ".isotope-item",
+            layoutMode: layout,
+            filter: filter,
+            sortBy: sort,
+          }
+        );
       });
     }
 
-    isotopeItem.querySelectorAll('.isotope-filters li').forEach(function(filters) {
-      filters.addEventListener('click', function() {
-        let active = isotopeItem.querySelector('.isotope-filters .filter-active');
-        if (active) active.classList.remove('filter-active');
-        this.classList.add('filter-active');
-        if (initIsotope) {
-          initIsotope.arrange({ filter: this.getAttribute('data-filter') });
-        }
-        if (typeof aosInit === 'function') {
-          aosInit();
-        }
-      }, false);
+    isotopeItem.querySelectorAll(".isotope-filters li").forEach(function (
+      filters
+    ) {
+      filters.addEventListener(
+        "click",
+        function () {
+          let active = isotopeItem.querySelector(
+            ".isotope-filters .filter-active"
+          );
+          if (active) active.classList.remove("filter-active");
+          this.classList.add("filter-active");
+          if (initIsotope) {
+            initIsotope.arrange({ filter: this.getAttribute("data-filter") });
+          }
+          if (typeof aosInit === "function") {
+            aosInit();
+          }
+        },
+        false
+      );
     });
   });
 
   /**
    * Frequently Asked Questions Toggle
    */
-  document.querySelectorAll('.faq-item h3, .faq-item .faq-toggle, .faq-item .faq-header').forEach((faqItem) => {
-    faqItem.addEventListener('click', () => {
-      faqItem.parentNode.classList.toggle('faq-active');
+  document
+    .querySelectorAll(".faq-item h3, .faq-item .faq-toggle, .faq-item .faq-header")
+    .forEach((faqItem) => {
+      faqItem.addEventListener("click", () => {
+        faqItem.parentNode.classList.toggle("faq-active");
+      });
+    });
+
+  /**
+   * Orbit animation init (con líneas desde el borde del círculo central y giro animado)
+   */
+  document.addEventListener("DOMContentLoaded", () => {
+    const orbitRing = document.querySelector(".orbit-ring");
+    const orbitItems = document.querySelectorAll(".orbit-item");
+    if (!orbitRing || orbitItems.length === 0) return;
+
+    const totalItems = orbitItems.length;
+    const radiusClose = 170;
+    const radiusFar = 240;
+
+    // elementos del centro (si existen en tu HTML)
+    const centerCircleEl = orbitRing.querySelector(".orbit-center-circle");
+    const logoEl = orbitRing.querySelector(".orbit-logo");
+
+    // forzar z-index correctos (puede ajustarse también desde CSS)
+    if (centerCircleEl) centerCircleEl.style.zIndex = "12";
+    if (logoEl) logoEl.style.zIndex = "13";
+
+    let angleOffset = 0;
+
+    // Crear líneas iniciales (una por cada ítem)
+    const orbitLines = [];
+    orbitItems.forEach(() => {
+      const line = document.createElement("div");
+      line.classList.add("orbit-line");
+      // style por defecto que asegura comportamiento correcto aunque tu CSS cambie
+      Object.assign(line.style, {
+        position: "absolute",
+        background: "cyan",
+        boxShadow: "0 0 10px cyan",
+        pointerEvents: "none",
+        zIndex: "10",
+        height: "2px", // será sobrescrito cuando calculemos width
+        transformOrigin: "0 50%",
+      });
+      orbitRing.appendChild(line);
+      orbitLines.push(line);
+    });
+
+    function updateOrbit() {
+      // recalcular centro cada frame para ser responsive
+      const rect = orbitRing.getBoundingClientRect();
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+
+      // radio del círculo central (si no existe, fallback)
+      const centerCircleRadius = centerCircleEl
+        ? centerCircleEl.offsetWidth / 2
+        : 60;
+
+      orbitItems.forEach((item, index) => {
+        const angle = (index / totalItems) * Math.PI * 2 + angleOffset;
+        const radius = index % 2 === 0 ? radiusClose : radiusFar;
+
+        // radios/centros del icono externo
+        const itemRadius = item.offsetWidth / 2;
+
+        // posicionar el centro del icono (izquierda/top del elemento)
+        const iconCenterX = centerX + Math.cos(angle) * radius;
+        const iconCenterY = centerY + Math.sin(angle) * radius;
+        const itemLeft = iconCenterX - itemRadius;
+        const itemTop = iconCenterY - itemRadius;
+
+        item.style.position = "absolute";
+        item.style.left = `${itemLeft}px`;
+        item.style.top = `${itemTop}px`;
+
+        // mantener iconos con orientación natural (compensar rotación)
+        item.style.transform = `rotate(${-angle}rad)`;
+
+        // calcular punto inicial de la línea: borde exterior del círculo central
+        const startX = centerX + Math.cos(angle) * centerCircleRadius;
+        const startY = centerY + Math.sin(angle) * centerCircleRadius;
+
+        // calcular punto final de la línea: borde interior del icono externo (para que la línea llegue al borde del círculo del ícono)
+        const endX = centerX + Math.cos(angle) * (radius - itemRadius);
+        const endY = centerY + Math.sin(angle) * (radius - itemRadius);
+
+        // longitud y ángulo de la línea
+        const dx = endX - startX;
+        const dy = endY - startY;
+        const lineLength = Math.sqrt(dx * dx + dy * dy);
+        const lineAngle = Math.atan2(dy, dx);
+
+        // actualizar línea correspondiente
+        const line = orbitLines[index];
+        line.style.width = `${lineLength}px`;      // ancho = distancia entre start y end
+        line.style.height = `2px`;                 // grosor
+        // colocar la esquina izquierda de la línea en (startX, startY) y centrar verticalmente con translate
+        line.style.left = `${startX}px`;
+        line.style.top = `${startY}px`;
+        line.style.transform = `translate(0, -50%) rotate(${lineAngle}rad)`;
+      });
+
+      // velocidad de giro (ajustá a gusto)
+      angleOffset += 0.0018;
+      requestAnimationFrame(updateOrbit);
+    }
+
+    // lanzar animación
+    updateOrbit();
+
+    // reajustar si cambia tamaño de ventana (opcional pero recomendable)
+    window.addEventListener("resize", () => {
+      // forzamos una pasada de update para recalcular centros inmediatamente
+      // (la RAF se encargará de las siguientes)
+      // no llamamos directamente updateOrbit() para evitar múltiples RAF anidados
+      // pero podemos solicitar un frame:
+      requestAnimationFrame(() => {});
     });
   });
-
-  /**
-   * ----- Consistent anchor scrolling (clicks + refresh with hash) -----
-   */
-
-  // 1) Ensure the browser doesn't auto-scroll on load/restore
-  if ('scrollRestoration' in history) {
-    history.scrollRestoration = 'manual';
-  }
-
-  // 2) Helper: get scroll-margin-top from the target (lets CSS control the offset)
-  function getScrollMarginTop(el) {
-    return parseInt(getComputedStyle(el).scrollMarginTop) || 0;
-  }
-
-  // 3) Helper: unified scroll with offset
-  function scrollToWithOffset(el, behavior) {
-    const y = window.scrollY + el.getBoundingClientRect().top - getScrollMarginTop(el);
-    window.scrollTo({ top: y, behavior });
-  }
-
-  // 4) Disable smooth just for the initial hash jump (avoids fighting AOS)
-  const styleTag = document.createElement('style');
-  styleTag.textContent = 'html.no-smooth { scroll-behavior: auto !important; }';
-  document.head.appendChild(styleTag);
-
-  // 5) On load with hash: jump instantly to final position (no animation), luego ya queda todo suave
-  window.addEventListener('load', function() {
-    if (window.location.hash) {
-      const section = document.querySelector(window.location.hash);
-      if (section) {
-        document.documentElement.classList.add('no-smooth');
-        // dos frames para asegurar layout tras fonts/images/AOS setup
-        requestAnimationFrame(() => {
-          requestAnimationFrame(() => {
-            scrollToWithOffset(section, 'auto'); // sin animación al cargar
-            setTimeout(() => {
-              document.documentElement.classList.remove('no-smooth');
-            }, 100);
-          });
-        });
-      }
-    }
-  });
-
-  // 6) Interceptar clics en enlaces internos para un scroll suave y consistente
-  document.addEventListener('click', function(e) {
-    const link = e.target.closest('a[href^="#"]');
-    if (!link) return;
-
-    const href = link.getAttribute('href');
-    if (!href || href === '#') return;
-
-    const target = document.querySelector(href);
-    if (!target) return;
-
-    // Evitar que el navegador haga su propio salto
-    e.preventDefault();
-
-    // Actualizar la URL (opcional, mantiene el hash)
-    if (history.pushState) {
-      history.pushState(null, '', href);
-    } else {
-      window.location.hash = href;
-    }
-
-    // Scroll suave y con offset
-    scrollToWithOffset(target, 'smooth');
-  }, false);
-
-  /**
-   * Navmenu Scrollspy
-   */
-  let navmenulinks = document.querySelectorAll('.navmenu a');
-
-  function navmenuScrollspy() {
-    navmenulinks.forEach(navmenulink => {
-      if (!navmenulink.hash) return;
-      let section = document.querySelector(navmenulink.hash);
-      if (!section) return;
-      let position = window.scrollY + 200;
-      if (position >= section.offsetTop && position <= (section.offsetTop + section.offsetHeight)) {
-        document.querySelectorAll('.navmenu a.active').forEach(link => link.classList.remove('active'));
-        navmenulink.classList.add('active');
-      } else {
-        navmenulink.classList.remove('active');
-      }
-    })
-  }
-  window.addEventListener('load', navmenuScrollspy);
-  document.addEventListener('scroll', navmenuScrollspy);
-
 })();
