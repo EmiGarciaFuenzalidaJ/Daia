@@ -9,7 +9,7 @@
   <meta name="keywords" content="">
 
   <!-- Favicons -->
-  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/Daia.png" rel="icon">
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
   <!-- Fonts -->
@@ -28,6 +28,28 @@
   <link href="assets/css/main.css" rel="stylesheet">
 
 </head>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const sections = document.querySelectorAll("section[id]");
+  const navLinks = document.querySelectorAll("#navmenu ul li a");
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        const id = entry.target.getAttribute("id");
+        const navLink = document.querySelector(`#navmenu ul li a[href="#${id}"]`);
+        if (entry.isIntersecting) {
+          navLinks.forEach((link) => link.classList.remove("active"));
+          if (navLink) navLink.classList.add("active");
+        }
+      });
+    },
+    { threshold: 0.5 } // Se activa cuando el 50% de la sección es visible
+  );
+
+  sections.forEach((section) => observer.observe(section));
+});
+</script>
 
 <body class="index-page">
 <script>
@@ -63,19 +85,19 @@
 
       <a href="index.html" class="logo d-flex align-items-center me-auto me-xl-0">
         <!-- Uncomment the line below if you also wish to use an image logo -->
-        <img src="assets/img/logo.webp" alt="">
+        <img src="assets/img/Daia.png" alt="">
         <h1 class="sitename">DAIA</h1>
       </a>
 
       <nav id="navmenu" class="navmenu">
         <ul>
-          <li><a href="#hero" class="active">Home</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#services">Services</a></li>
-          <li><a href="#portfolio">Portfolio</a></li>
-          <li><a href="#team">Team</a></li>
+          <li><a href="#hero" class="active">Inicio</a></li>
+          <li><a href="#about">Nosotros</a></li>
+          <li><a href="#services">Servicios</a></li>
+          <li><a href="#portfolio">Proyectos</a></li>
+          <li><a href="#team">Equipo</a></li>
           <li><a href="#faq">FaQ</a></li>
-          <li><a href="#contact">Contact</a></li>
+          <li><a href="#contact">Contacto</a></li>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
@@ -98,7 +120,7 @@
         <!-- Logo Central con borde -->
         <div class="orbit-center">
           <div class="orbit-center-circle"></div>
-          <img src="assets/img/Google-Logo-PNG.png" alt="Logo Central" class="orbit-logo">
+          <img src="assets/img/Daia.png" alt="Logo Central" class="orbit-logo">
         </div>
 
         <!-- Ring of Icons -->
@@ -201,7 +223,7 @@
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
         <span class="description-title">About</span>
-        <h2>About</h2>
+        <h2>Nosotros</h2>
         <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
       </div><!-- End Section Title -->
 
@@ -234,8 +256,8 @@
                     <i class="bi bi-check2-circle"></i>
                   </div>
                   <div class="text">
-                    <h4>Expert Consulting</h4>
-                    <p>In today's dynamic market landscape, strategic implementation of emerging technologies drives competitive advantage and sustainable growth trajectories.</p>
+                    <h4>Cónocenos</h4>
+                    <p>En DAIA creemos en el poder de la tecnología para transformar los negocios. Somos una agencia especializada en Inteligencia Artificial, Automatizaciones y Estrategia de Marketing, con sede en Mendoza, Argentina. Nuestro equipo multidisciplinario esta altamente capacitado en IA, marketing digital y ventas.</p>
                   </div>
                 </div>
 
@@ -244,8 +266,8 @@
                     <i class="bi bi-lightbulb"></i>
                   </div>
                   <div class="text">
-                    <h4>Innovative Solutions</h4>
-                    <p>Leveraging cutting-edge frameworks and methodologies to deliver scalable solutions that address complex business challenges effectively.</p>
+                    <h4>Qué hacemos</h4>
+                    <p>Desarrollamos chatbots impulsados ​​por IA para automatizar y potenciar tus ventas. Nuestros bots conversacionales incluyen: Embudos de ventas para nutrir leads y convertir prospectos. Appointment setters que agendan citas con tus clientes potenciales. Closers de ventas para cerrar negocios dentro del chatbot. También diseñamos estrategias de pausa y contenidos en redes sociales para incrementar tus leads y ventas. Contamos con amplia experiencia en Facebook Ads y Google Ads. Lo que nos apasiona es entregar resultados reales, utilizando las últimas tendencias en Inteligencia Artificial y marketing digital. Queremos que alcances tus objetivos de negocio con nuestras soluciones.</p>
                   </div>
                 </div>
 
@@ -254,15 +276,19 @@
                     <i class="bi bi-graph-up-arrow"></i>
                   </div>
                   <div class="text">
-                    <h4>Growth Strategy</h4>
-                    <p>Our comprehensive approach to digital transformation enables organizations to achieve sustainable competitive advantages in their respective markets.</p>
+                    <h4>Trabajemos juntos</h4>
+                    <p>Somos un equipo apasionado por la tecnología y con más de 10 años de experiencia en marketing digital e Inteligencia Artificial. Conocemos los desafíos de hacer crecer un negocio. Ya ayudamos a docenas de empresas en Latinoamérica a implementar soluciones innovadoras que impactaron sus resultados.</p>
                   </div>
                 </div>
               </div>
 
               <div class="cta-buttons">
-                <a href="#" class="btn-learn-more">Learn More</a>
-                <a href="#" class="btn-get-started">Get Started</a>
+               <!-- <a href="#" class="btn-learn-more">Learn More</a> -->
+                <a href="https://wa.me/5491112345678?text=Hola!%20Quiero%20saber%20más%20sobre%20sus%20servicios" 
+                   target="_blank" 
+                   class="btn-get-started">
+                   Quiero saber más
+                </a>
               </div>
             </div>
           </div>
@@ -278,7 +304,7 @@
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
         <span class="description-title">Services</span>
-        <h2>Services</h2>
+        <h2>Servicios</h2>
         <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
       </div><!-- End Section Title -->
         <!-- Texto con efecto Typed -->
@@ -405,7 +431,7 @@
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
         <span class="description-title">Steps</span>
-        <h2>Steps</h2>
+        <h2>Nuestro Método</h2>
         <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
       </div><!-- End Section Title -->
 
@@ -419,11 +445,19 @@
                 <span class="step-number">01</span>
                 <div class="card-body">
                   <div class="step-icon">
-                    <i class="bi bi-pencil-square"></i>
+                    <i class="bi bi-chat-left-text"></i>
                   </div>
                   <div class="step-content">
-                    <h3>Project Planning</h3>
-                    <p>Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.</p>
+                    <h3>Consultoría</h3>
+                     <p>
+                      <strong>Sin cargo</strong><br><br>
+                      <strong>Exploración sin Compromisos:</strong><br>
+                      Iniciaremos con una charla amigable para entender tus necesidades y metas.<br><br>
+                      <strong>Análisis Personalizado:</strong><br>
+                      Profundizaremos en tu empresa para identificar áreas donde la IA podría impulsar tu éxito.<br><br>
+                      <strong>Ideas Claras y Accionables:</strong><br>
+                      Te proporcionaremos sugerencias prácticas y aplicables, basadas en tus objetivos empresariales.
+                    </p>
                   </div>
                 </div>
               </div>
@@ -434,11 +468,18 @@
                 <span class="step-number">02</span>
                 <div class="card-body">
                   <div class="step-icon">
-                    <i class="bi bi-gear"></i>
+                    <i class="bi bi-calendar"></i>
                   </div>
                   <div class="step-content">
-                    <h3>Development Phase</h3>
-                    <p>Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus.</p>
+                    <h3>Plan</h3>
+                    <p> <strong>Planificación Estratégica</strong><br><br>
+                      <strong>Diseño de Soluciones:</strong><br>
+                      Crearemos un plan a medida, detallando cómo la IA puede transformar tus operaciones.<br><br>
+                      <strong>Visualización del Impacto:</strong><br>
+                      Te mostraremos cómo la automatización puede impulsar la eficiencia y reducir costos.<br><br>
+                      <strong>Entendimiento Total:</strong><br>
+                      Aseguraremos que comprendas el proceso y los beneficios antes de seguir adelante.
+                    </p>
                   </div>
                 </div>
               </div>
@@ -449,11 +490,18 @@
                 <span class="step-number">03</span>
                 <div class="card-body">
                   <div class="step-icon">
-                    <i class="bi bi-search"></i>
+                    <i class="bi bi-arrow-right"></i>
                   </div>
                   <div class="step-content">
-                    <h3>Testing &amp; QA</h3>
-                    <p>Phasellus ullamcorper ipsum rutrum nunc. Nunc nonummy metus. Vestibulum volutpat pretium libero.</p>
+                    <h3>Acción</h3>
+                    <p><strong>Implementar</strong><br><br>
+                      <strong>Integración Perfecta:</strong><br>
+                      Nos ocuparemos de todas las complejidades técnicas, garantizando una implementación suave y sin interrupciones.<br><br>
+                      <strong>Capacitación Personalizada:</strong><br>
+                      Tu equipo recibirá capacitación práctica para utilizar las nuevas herramientas con confianza.<br><br>
+                      <strong>Soporte Continuo:</strong><br>
+                      Estaremos a tu lado para resolver cualquier duda y asegurar que la implementación sea un éxito.
+                  </p>
                   </div>
                 </div>
               </div>
@@ -464,11 +512,18 @@
                 <span class="step-number">04</span>
                 <div class="card-body">
                   <div class="step-icon">
-                    <i class="bi bi-rocket-takeoff"></i>
+                    <i class="bi bi-person-plus"></i>
                   </div>
                   <div class="step-content">
-                    <h3>Launch &amp; Support</h3>
-                    <p>Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt.</p>
+                    <h3>Cambios</h3>
+                    <p> <strong>Transformación Empresarial</strong><br><br>
+                      <strong>Evaluación de Resultados:</strong><br>
+                      Mediremos el impacto de las soluciones de IA en tus operaciones y resultados.<br><br>
+                      <strong>Ajustes Continuos:</strong><br>
+                      Estaremos atentos para realizar ajustes y optimizaciones según las necesidades cambiantes de tu negocio.<br><br>
+                      <strong>Éxito Continuo:</strong><br>
+                      Observa cómo tu empresa florece con procesos más eficientes, mayor productividad y clientes más satisfechos.
+                      </p>
                   </div>
                 </div>
               </div>
@@ -797,7 +852,7 @@
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
         <span class="description-title">Team</span>
-        <h2>Team</h2>
+        <h2>Equipo</h2>
         <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
       </div><!-- End Section Title -->
 
@@ -1081,7 +1136,7 @@
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
         <span class="description-title">Contact</span>
-        <h2>Contact</h2>
+        <h2>Contacto</h2>
         <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
       </div><!-- End Section Title -->
 
@@ -1248,11 +1303,6 @@
     <div class="container copyright text-center mt-4">
       <p>.<span></span> <strong class="px-1 sitename"></strong> <span></span></p>
       <div class="credits">
-        <!-- All the links in the footer should remain intact. -->
-        <!-- You can delete the links only if you've purchased the pro version. -->
-        <!-- Licensing information: https://bootstrapmade.com/license/ -->
-        <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
-        <!-- Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> -->
       </div>
     </div>
 

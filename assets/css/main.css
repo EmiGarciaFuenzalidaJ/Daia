@@ -1450,7 +1450,11 @@ section,
 .steps .process-item .content {
   width: 100%;
   position: relative;
-  background: linear-gradient(145deg, color-mix(in srgb, var(--accent-color), transparent 95%), var(--surface-color));
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, var(--accent-color), transparent 95%),
+    var(--surface-color)
+  );
   border: 2px solid color-mix(in srgb, var(--accent-color), transparent 85%);
   border-radius: 20px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -1463,7 +1467,11 @@ section,
 }
 
 .steps .process-item .content:hover .step-icon {
-  background: linear-gradient(135deg, color-mix(in srgb, var(--accent-color), transparent 15%), var(--accent-color));
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--accent-color), transparent 15%),
+    var(--accent-color)
+  );
   transform: rotate(10deg);
 }
 
@@ -1501,11 +1509,15 @@ section,
   flex-shrink: 0;
   width: 70px;
   height: 70px;
-  background-color: var(--accent-color);
+  background: linear-gradient(
+    135deg,
+    var(--accent-color),
+    var(--accent-color)
+  ); /* corregido */
   border-radius: 15px;
   display: grid;
   place-items: center;
-  transition: all 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* sin transición de background */
   box-shadow: 0 5px 15px color-mix(in srgb, var(--accent-color), transparent 70%);
 }
 
@@ -1592,7 +1604,6 @@ section,
     margin: 0.5rem 0;
   }
 }
-
 
 /*--------------------------------------------------------------
 # Testimonials Section
