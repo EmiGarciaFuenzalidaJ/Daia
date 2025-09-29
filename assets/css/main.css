@@ -131,33 +131,43 @@ h6 {
 /*--------------------------------------------------------------
 # Global Header
 --------------------------------------------------------------*/
+/* Header Principal */
 .header {
   --background-color: #070708;
   color: var(--default-color);
   background-color: var(--background-color);
-  padding: 15px 0;
+  padding: 10px 0; /* Ajuste de padding para logos más grandes */
   transition: all 0.5s;
   z-index: 997;
+  display: flex;
+  align-items: center;
+  width: 100%;
 }
 
+/* Logo */
 .header .logo {
   line-height: 1;
+  display: flex;
+  align-items: center;
 }
 
 .header .logo img {
-  max-height: 36px;
-  margin-right: 8px;
+  max-height: 50px; /* Ajusta según el tamaño real del logo */
+  width: auto;       /* Mantiene la proporción */
+  margin-right: 0;   /* No necesitamos espacio para h1 */
+  display: block;
 }
 
+/* Ocultar el h1 ya que el logo tiene texto */
 .header .logo h1 {
-  font-size: 30px;
-  margin: 0;
-  font-weight: 400;
-  color: var(--heading-color);
+  display: none;
 }
 
+/* Links sociales */
 .header .header-social-links {
   padding-right: 15px;
+  display: flex;
+  align-items: center;
 }
 
 .header .header-social-links a {
@@ -176,6 +186,7 @@ h6 {
   line-height: 0px;
 }
 
+/* Responsividad */
 @media (max-width: 1200px) {
   .header .logo {
     order: 1;
@@ -190,15 +201,11 @@ h6 {
   }
 }
 
+/* Efecto Scroll */
 .scrolled .header {
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border-bottom: 1px solid color-mix(in srgb, var(--default-color), transparent 80%);
-}
-
-/* Global Header on Scroll
-------------------------------*/
-.scrolled .header {
   --background-color: rgba(7, 7, 8, 0.8);
 }
 
