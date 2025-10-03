@@ -20,10 +20,10 @@
 :root {
   --nav-color: rgba(255, 255, 255, 0.8);  /* The default color of the main navmenu links */
   --nav-hover-color: #575AFF; /* Applied to main navmenu links when they are hovered over or active */
-  --nav-mobile-background-color: #1f1f23; /* Used as the background color for mobile navigation menu */
+  --nav-mobile-background-color: #070708; /* Used as the background color for mobile navigation menu */
   --nav-dropdown-background-color: #1f1f23; /* Used as the background color for dropdown items that appear when hovering over primary navigation items */
   --nav-dropdown-color: rgba(255, 255, 255, 0.8); /* Used for navigation links of the dropdown items in the navigation menu. */
-  --nav-dropdown-hover-color: #008870; /* Similar to --nav-hover-color, this color is applied to dropdown navigation links when they are hovered over. */
+  --nav-dropdown-hover-color: #575AFF575AFF; /* Similar to --nav-hover-color, this color is applied to dropdown navigation links when they are hovered over. */
 }
 
 /* Color Presets - These classes override global colors when applied to any section or element, providing reuse of the sam color scheme. */
@@ -1751,7 +1751,6 @@ section,
 
 /*--------------------------------------------------------------
 # Portfolio Section
---------------------------------------------------------------*/
 /* --- Grid de tarjetas --- */
 .portfolio {
   padding: 60px 0;
@@ -1765,12 +1764,12 @@ section,
 
 /* --- Tarjetas (Cards) --- */
 .portfolio .portfolio-card {
-  background: #1a1a1a; /* Fondo oscuro para contraste */
+  background: #1a1a1a; /* Fondo oscuro */
   border-radius: 10px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  height: 450px; /* Altura fija para uniformidad */
+  height: 450px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -1780,28 +1779,41 @@ section,
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
-/* --- Imagen y overlay --- */
+/* --- Imagen y overlay con wrapper --- */
 .portfolio .image-container {
   position: relative;
-  height: 60%; /* Proporción para la imagen */
+  height: 60%;
   overflow: hidden;
+  border-radius: 10px 10px 0 0; /* Coincide con la tarjeta */
 }
 
-.portfolio .image-container img {
+.portfolio .image-container .img-wrapper {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: inherit; /* Hereda el borde de la tarjeta */
+}
+
+.portfolio .image-container .img-wrapper img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.5s ease;
+  display: block;
+  transition: transform 0.6s ease;
+  will-change: transform;
+  border-radius: inherit; /* Aplica el mismo borde redondeado */
+  transform: translateZ(0); /* Evita artefactos en el renderizado */
 }
 
-.portfolio .portfolio-card:hover .image-container img {
-  transform: scale(1.05);
+.portfolio .portfolio-card:hover .image-container .img-wrapper img {
+  transform: scale(1.08);
 }
 
+/* --- Overlay --- */
 .portfolio .image-container .overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.5); /* Fondo oscuro para el overlay */
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1822,9 +1834,9 @@ section,
   gap: 10px;
 }
 
-/* --- Botón de WhatsApp en el overlay --- */
+/* --- Botón de WhatsApp --- */
 .portfolio .image-container .overlay-content .whatsapp-btn {
-  background: #25d366; /* Color oficial de WhatsApp */
+  background: #25d366;
   color: white;
   padding: 10px 20px;
   border-radius: 50px;
@@ -1839,7 +1851,7 @@ section,
 }
 
 .portfolio .image-container .overlay-content .whatsapp-btn:hover {
-  background: #128c7e; /* Color más oscuro de WhatsApp */
+  background: #128c7e;
   transform: scale(1.1);
 }
 
@@ -1849,10 +1861,10 @@ section,
   text-align: center;
   display: flex;
   flex-direction: column;
-  justify-content: center; /* Centra verticalmente el contenido */
-  align-items: center; /* Centra horizontalmente el contenido */
+  justify-content: center;
+  align-items: center;
   gap: 10px;
-  height: 40%; /* Proporción para el contenido textual */
+  height: 40%;
 }
 
 .portfolio .content h3 {
@@ -1869,10 +1881,20 @@ section,
   line-height: 1.5;
 }
 
+/* --- Responsividad --- */
+@media (max-width: 768px) {
+  .portfolio .portfolio-card {
+    height: auto;
+  }
+
+  .portfolio .image-container {
+    height: 200px;
+  }
+}
 
 /*--------------------------------------------------------------
 # Team Section
---------------------------------------------------------------*/
+/* --- Cards de Equipo --- */
 .team .team-member {
   position: relative;
   background-color: var(--surface-color);
@@ -1906,9 +1928,10 @@ section,
   color: var(--accent-color);
 }
 
+/* --- Imagen cuadrada --- */
 .team .member-image {
   position: relative;
-  height: 280px;
+  aspect-ratio: 1/1; /* cuadrado perfecto */
   overflow: hidden;
 }
 
@@ -1919,7 +1942,11 @@ section,
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(135deg, var(--accent-color) 0%, color-mix(in srgb, var(--accent-color), transparent 50%) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--accent-color) 0%,
+    color-mix(in srgb, var(--accent-color), transparent 50%) 100%
+  );
   opacity: 0;
   transition: 0.4s;
   z-index: 1;
@@ -1928,10 +1955,12 @@ section,
 .team .member-image img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: cover; /* rellena el cuadrado */
+  object-position: top center; /* centra en la cara */
   transition: transform 0.5s ease;
 }
 
+/* --- Overlay social --- */
 .team .social-overlay {
   position: absolute;
   bottom: 0;
@@ -1972,6 +2001,7 @@ section,
   transform: scale(1.1);
 }
 
+/* --- Info del miembro --- */
 .team .member-info {
   padding: 25px 20px 30px;
   text-align: center;
@@ -1986,7 +2016,11 @@ section,
   transform: translateX(-50%);
   width: 60px;
   height: 4px;
-  background: linear-gradient(90deg, var(--accent-color) 0%, color-mix(in srgb, var(--accent-color), transparent 60%) 100%);
+  background: linear-gradient(
+    90deg,
+    var(--accent-color) 0%,
+    color-mix(in srgb, var(--accent-color), transparent 60%) 100%
+  );
   border-radius: 2px;
 }
 
@@ -2015,13 +2049,10 @@ section,
   color: color-mix(in srgb, var(--default-color), transparent 20%);
 }
 
+/* --- Responsividad --- */
 @media (max-width: 768px) {
   .team .team-member {
     margin-bottom: 30px;
-  }
-
-  .team .team-member .member-image {
-    height: 250px;
   }
 
   .team .team-member .member-info {
@@ -2036,7 +2067,6 @@ section,
     font-size: 14px;
   }
 }
-
 /*--------------------------------------------------------------
 # Pricing Section
 --------------------------------------------------------------*/
