@@ -328,6 +328,8 @@ h6 {
     margin-right: 10px;
     cursor: pointer;
     transition: color 0.3s;
+    z-index: 100000;
+    position: relative;
   }
 
   .navmenu {
@@ -419,8 +421,10 @@ h6 {
     background-color: rgba(33, 37, 41, 0.03);
   }
 
+  /* Fix: evitar que el menú se oculte o quede detrás del contenido */
   .mobile-nav-active {
-    overflow: hidden;
+    overflow: hidden !important;
+    position: relative;
   }
 
   .mobile-nav-active .mobile-nav-toggle {
@@ -430,19 +434,30 @@ h6 {
     top: 15px;
     right: 15px;
     margin-right: 0;
-    z-index: 9999;
+    z-index: 100001;
   }
 
   .mobile-nav-active .navmenu {
     position: fixed;
-    overflow: hidden;
     inset: 0;
-    background: rgba(33, 37, 41, 0.8);
+    background: rgba(33, 37, 41, 0.95);
     transition: 0.3s;
+    z-index: 100000;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 80px;
   }
 
-  .mobile-nav-active .navmenu>ul {
+  .mobile-nav-active .navmenu > ul {
     display: block;
+    position: relative;
+    z-index: 100001;
+  }
+
+  header,
+  .header {
+    z-index: 10000; /* el header queda debajo del menú móvil */
   }
 }
 
