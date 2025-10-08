@@ -322,7 +322,6 @@ h6 {
 /* ===============================
    NAVMENU GENERAL STYLES
    =============================== */
-
 .navmenu {
   padding: 0;
   z-index: 9997;
@@ -356,7 +355,9 @@ h6 {
   transition: transform 0.3s;
 }
 
-/* =============================== DESKTOP NAVIGATION =============================== */
+/* ===============================
+   DESKTOP NAVIGATION
+   =============================== */
 @media (min-width: 1200px) {
   .navmenu {
     padding: 0;
@@ -417,14 +418,12 @@ h6 {
     color: var(--nav-dropdown-hover-color);
   }
 
-  /* Show dropdown on hover */
   .navmenu .dropdown:hover > ul {
     opacity: 1;
     top: 100%;
     visibility: visible;
   }
 
-  /* Sub-dropdowns */
   .navmenu .dropdown .dropdown ul {
     top: 0;
     left: 100%;
@@ -438,7 +437,9 @@ h6 {
   }
 }
 
-/* =============================== MOBILE NAVIGATION =============================== */
+/* ===============================
+   MOBILE NAVIGATION
+   =============================== */
 @media (max-width: 1199px) {
   .mobile-nav-toggle {
     color: var(--nav-color);
@@ -447,32 +448,32 @@ h6 {
     margin-right: 10px;
     cursor: pointer;
     transition: color 0.3s;
-    z-index: 10001; /* más alto que cualquier otro */
+    z-index: 10002;
     position: relative;
   }
 
+  /* Menú oculto por defecto */
   .navmenu ul {
     display: none;
-    position: fixed; /* cambio clave */
-    top: 70px;
-    left: 20px;
-    right: 20px;
-    bottom: 20px;
-    padding: 10px 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh; /* ocupa toda la pantalla */
+    padding: 100px 0 40px;
     margin: 0;
-    border-radius: 6px;
     background-color: var(--nav-mobile-background-color);
     overflow-y: auto;
-    box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.2);
-    z-index: 10000;
+    box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.25);
+    z-index: 10001;
   }
 
   .navmenu a,
   .navmenu a:focus {
     color: var(--nav-dropdown-color);
-    padding: 10px 20px;
+    padding: 14px 24px;
     font-family: var(--nav-font);
-    font-size: 17px;
+    font-size: 18px;
     font-weight: 500;
     display: flex;
     align-items: center;
@@ -480,8 +481,8 @@ h6 {
   }
 
   .navmenu a i {
-    width: 30px;
-    height: 30px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -501,11 +502,11 @@ h6 {
     transform: rotate(180deg);
   }
 
-  /* Dropdown en móvil */
+  /* Dropdowns en móvil */
   .navmenu .dropdown ul {
     display: none;
     padding: 10px 0;
-    margin: 10px 20px;
+    margin: 10px 25px;
     background-color: var(--nav-dropdown-background-color);
     border: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
   }
@@ -515,22 +516,23 @@ h6 {
   }
 
   /* Estado activo del menú móvil */
-  .mobile-nav-active {
+  body.mobile-nav-active {
     overflow: hidden;
   }
 
-  .mobile-nav-active .navmenu > ul {
-    display: block;
-  }
-
-  .mobile-nav-active .navmenu {
+  body.mobile-nav-active .navmenu::before {
+    content: "";
     position: fixed;
     inset: 0;
     background: rgba(33, 37, 41, 0.85);
-    z-index: 9999;
+    z-index: 10000;
   }
 
-  .mobile-nav-active .mobile-nav-toggle {
+  body.mobile-nav-active .navmenu > ul {
+    display: block;
+  }
+
+  body.mobile-nav-active .mobile-nav-toggle {
     color: #fff;
     position: fixed;
     font-size: 32px;
@@ -539,6 +541,7 @@ h6 {
     z-index: 10002;
   }
 }
+
 
 /*--------------------------------------------------------------
 # Global Footer
