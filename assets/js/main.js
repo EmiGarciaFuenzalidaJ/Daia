@@ -32,6 +32,7 @@
     mobileNavToggleBtn.classList.toggle("bi-list");
     mobileNavToggleBtn.classList.toggle("bi-x");
   }
+
   if (mobileNavToggleBtn) {
     mobileNavToggleBtn.addEventListener("click", mobileNavToogle);
   }
@@ -81,6 +82,7 @@
         : scrollTop.classList.remove("active");
     }
   }
+
   if (scrollTop) {
     scrollTop.addEventListener("click", (e) => {
       e.preventDefault();
@@ -95,7 +97,7 @@
   document.addEventListener("scroll", toggleScrollTop);
 
   /**
-   * Animation on scroll function and init
+   * Animation on scroll (AOS)
    */
   function aosInit() {
     if (window.AOS && typeof AOS.init === "function") {
@@ -110,7 +112,7 @@
   window.addEventListener("load", aosInit);
 
   /**
-   * Initiate glightbox
+   * Initiate GLightbox
    */
   if (window.GLightbox) {
     GLightbox({ selector: ".glightbox" });
@@ -122,7 +124,7 @@
   if (window.PureCounter) new PureCounter();
 
   /**
-   * Init swiper sliders
+   * Init Swiper sliders
    */
   function initSwiper() {
     document.querySelectorAll(".init-swiper").forEach(function (swiperElement) {
@@ -142,7 +144,7 @@
   window.addEventListener("load", initSwiper);
 
   /**
-   * Init isotope layout and filters
+   * Init Isotope layout and filters
    */
   document.querySelectorAll(".isotope-layout").forEach(function (isotopeItem) {
     let layout = isotopeItem.getAttribute("data-layout") ?? "masonry";
@@ -199,7 +201,7 @@
     });
 
   /**
-   * Orbit animation init (con líneas desde el borde del círculo central y giro animado)
+   * Orbit animation init (líneas + giro animado)
    */
   document.addEventListener("DOMContentLoaded", () => {
     const orbitRing = document.querySelector(".orbit-ring");
@@ -210,29 +212,26 @@
     const radiusClose = 170;
     const radiusFar = 240;
 
-    // elementos del centro (si existen en tu HTML)
     const centerCircleEl = orbitRing.querySelector(".orbit-center-circle");
     const logoEl = orbitRing.querySelector(".orbit-logo");
 
-    // forzar z-index correctos (puede ajustarse también desde CSS)
     if (centerCircleEl) centerCircleEl.style.zIndex = "12";
     if (logoEl) logoEl.style.zIndex = "13";
 
     let angleOffset = 0;
 
-    // Crear líneas iniciales (una por cada ítem)
+    // Crear líneas iniciales
     const orbitLines = [];
     orbitItems.forEach(() => {
       const line = document.createElement("div");
       line.classList.add("orbit-line");
-      // style por defecto que asegura comportamiento correcto aunque tu CSS cambie
       Object.assign(line.style, {
         position: "absolute",
         background: "cyan",
         boxShadow: "0 0 10px cyan",
         pointerEvents: "none",
         zIndex: "10",
-        height: "2px", // será sobrescrito cuando calculemos width
+        height: "2px",
         transformOrigin: "0 50%",
       });
       orbitRing.appendChild(line);
@@ -240,12 +239,10 @@
     });
 
     function updateOrbit() {
-      // recalcular centro cada frame para ser responsive
       const rect = orbitRing.getBoundingClientRect();
       const centerX = rect.width / 2;
       const centerY = rect.height / 2;
 
-      // radio del círculo central (si no existe, fallback)
       const centerCircleRadius = centerCircleEl
         ? centerCircleEl.offsetWidth / 2
         : 60;
@@ -253,11 +250,8 @@
       orbitItems.forEach((item, index) => {
         const angle = (index / totalItems) * Math.PI * 2 + angleOffset;
         const radius = index % 2 === 0 ? radiusClose : radiusFar;
-
-        // radios/centros del icono externo
         const itemRadius = item.offsetWidth / 2;
 
-        // posicionar el centro del icono (izquierda/top del elemento)
         const iconCenterX = centerX + Math.cos(angle) * radius;
         const iconCenterY = centerY + Math.sin(angle) * radius;
         const itemLeft = iconCenterX - itemRadius;
@@ -266,48 +260,33 @@
         item.style.position = "absolute";
         item.style.left = `${itemLeft}px`;
         item.style.top = `${itemTop}px`;
-
-        // mantener iconos con orientación natural (compensar rotación)
         item.style.transform = `rotate(${-angle}rad)`;
 
-        // calcular punto inicial de la línea: borde exterior del círculo central
         const startX = centerX + Math.cos(angle) * centerCircleRadius;
         const startY = centerY + Math.sin(angle) * centerCircleRadius;
-
-        // calcular punto final de la línea: borde interior del icono externo (para que la línea llegue al borde del círculo del ícono)
         const endX = centerX + Math.cos(angle) * (radius - itemRadius);
         const endY = centerY + Math.sin(angle) * (radius - itemRadius);
 
-        // longitud y ángulo de la línea
         const dx = endX - startX;
         const dy = endY - startY;
         const lineLength = Math.sqrt(dx * dx + dy * dy);
         const lineAngle = Math.atan2(dy, dx);
 
-        // actualizar línea correspondiente
         const line = orbitLines[index];
-        line.style.width = `${lineLength}px`;      // ancho = distancia entre start y end
-        line.style.height = `2px`;                 // grosor
-        // colocar la esquina izquierda de la línea en (startX, startY) y centrar verticalmente con translate
+        line.style.width = `${lineLength}px`;
+        line.style.height = `2px`;
         line.style.left = `${startX}px`;
         line.style.top = `${startY}px`;
         line.style.transform = `translate(0, -50%) rotate(${lineAngle}rad)`;
       });
 
-      // velocidad de giro (ajustá a gusto)
       angleOffset += 0.0018;
       requestAnimationFrame(updateOrbit);
     }
 
-    // lanzar animación
     updateOrbit();
 
-    // reajustar si cambia tamaño de ventana (opcional pero recomendable)
     window.addEventListener("resize", () => {
-      // forzamos una pasada de update para recalcular centros inmediatamente
-      // (la RAF se encargará de las siguientes)
-      // no llamamos directamente updateOrbit() para evitar múltiples RAF anidados
-      // pero podemos solicitar un frame:
       requestAnimationFrame(() => {});
     });
   });

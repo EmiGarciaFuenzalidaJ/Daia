@@ -356,9 +356,7 @@ h6 {
   transition: transform 0.3s;
 }
 
-/* ===============================
-   DESKTOP NAVIGATION
-   =============================== */
+/* =============================== DESKTOP NAVIGATION =============================== */
 @media (min-width: 1200px) {
   .navmenu {
     padding: 0;
@@ -426,7 +424,7 @@ h6 {
     visibility: visible;
   }
 
-  /* Sub-dropdowns (dropdown dentro de dropdown) */
+  /* Sub-dropdowns */
   .navmenu .dropdown .dropdown ul {
     top: 0;
     left: 100%;
@@ -440,9 +438,7 @@ h6 {
   }
 }
 
-/* ===============================
-   MOBILE NAVIGATION
-   =============================== */
+/* =============================== MOBILE NAVIGATION =============================== */
 @media (max-width: 1199px) {
   .mobile-nav-toggle {
     color: var(--nav-color);
@@ -451,20 +447,24 @@ h6 {
     margin-right: 10px;
     cursor: pointer;
     transition: color 0.3s;
-    z-index: 9999;
+    z-index: 10001; /* más alto que cualquier otro */
+    position: relative;
   }
 
   .navmenu ul {
     display: none;
-    position: absolute;
-    inset: 60px 20px 20px 20px;
+    position: fixed; /* cambio clave */
+    top: 70px;
+    left: 20px;
+    right: 20px;
+    bottom: 20px;
     padding: 10px 0;
     margin: 0;
     border-radius: 6px;
     background-color: var(--nav-mobile-background-color);
     overflow-y: auto;
-    box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.1);
-    z-index: 9998;
+    box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.2);
+    z-index: 10000;
   }
 
   .navmenu a,
@@ -474,6 +474,9 @@ h6 {
     font-family: var(--nav-font);
     font-size: 17px;
     font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
 
   .navmenu a i {
@@ -516,22 +519,24 @@ h6 {
     overflow: hidden;
   }
 
-  .mobile-nav-active .mobile-nav-toggle {
-    color: #fff;
-    position: absolute;
-    font-size: 32px;
-    top: 15px;
-    right: 15px;
+  .mobile-nav-active .navmenu > ul {
+    display: block;
   }
 
   .mobile-nav-active .navmenu {
     position: fixed;
     inset: 0;
-    background: rgba(33, 37, 41, 0.8);
+    background: rgba(33, 37, 41, 0.85);
+    z-index: 9999;
   }
 
-  .mobile-nav-active .navmenu > ul {
-    display: block;
+  .mobile-nav-active .mobile-nav-toggle {
+    color: #fff;
+    position: fixed;
+    font-size: 32px;
+    top: 20px;
+    right: 20px;
+    z-index: 10002;
   }
 }
 
